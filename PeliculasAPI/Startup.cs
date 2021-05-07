@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using PeliculasAPI.Servicos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,10 @@ namespace PeliculasAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(typeof(Startup));
+
+            services.AddTransient<IAlamacenadorArchivos, AlmacenadorDeArchivosLocal>();
+            services.AddHttpContextAccessor();
+
             services.AddDbContext<ApplicationDbContext>(c =>
             c.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
